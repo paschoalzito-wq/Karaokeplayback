@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Karaokê Pro</title>
+<style>
+body { font-family: Arial; background:#111; color:#fff; text-align:center; }
+h1 { color:#0f0; }
+input, button { padding:10px; margin:5px; }
+table { margin:auto; border-collapse: collapse; width:80%; }
+th, td { border:1px solid #555; padding:8px; }
+.cantando { background:green; }
+.proximo { background:orange; }
+</style>
+</head>
+<body>
+
+<h1>🎤 Karaokê Pro</h1>
+
+<input id="nome" placeholder="Nome">
+<input id="musica" placeholder="Música">
+<button onclick="add()">Adicionar</button>
+
+<table id="tabela">
+<tr><th>Ordem</th><th>Nome</th><th>Música</th><th>Status</th></tr>
+</table>
+
+<button onclick="next()">➡️ Próximo Cantor</button>
+
+<script>
+let lista = [];
+
+function render(){
+  let tabela = document.getElementById("tabela");
+  tabela.innerHTML = "<tr><th>Ordem</th><th>Nome</th><th>Música</th><th>Status</th></tr>";
+  lista.forEach((item, i)=>{
+    let status = "Na fila";
+    let classe = "";
+    if(i==0){ status="Cantando"; classe="cantando"; }
+    if(i==1){ status="Próximo"; classe="proximo"; }
+
+    tabela.innerHTML += `<tr class="${classe}">
+      <td>${i+1}</td>
+      <td>${item.nome}</td>
+      <td>${item.musica}</td>
+      <td>${status}</td>
+    </tr>`;
+  });
+}
+
+function add(){
+  let nome = document.getElementById("nome").value;
+  let musica = document.getElementById("musica").value;
+  if(nome && musica){
+    lista.push({nome, musica});
+    render();
+  }
+}
+
+function next(){
+  lista.shift();
+  render();
+}
+</script>
+
+</body>
+</html>
